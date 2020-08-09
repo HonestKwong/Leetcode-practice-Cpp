@@ -5,11 +5,71 @@
  */
 
 // @lc code=start
-class Solution {
+class Solution1 {
 public:
     int lengthOfLongestSubstring(string s) {
+        if(s.size() == 0) return 0; //首先排除空的字符串
+        unordered_set<char> lookup;
+        int maxStr = 0;
+        int left = 0;
+        for(int i = 0; i < s.size(); i++){
+            while(lookup.find(s[i])!=lookup.end()){
+                lookup.erase(s[left]);
+                left++;
+            }
+            maxStr = max(maxStr, i-left+1);
+            lookup.insert(s[i]);
+        }
+        return maxStr;
 
     }
 };
+
+//Solution 1 默写
+class Solution2 {
+public:
+    int lengthOfLongestSubstring(string s) {
+        if(s.size()==0) return 0;
+        int left = 0;
+        int maxNumber = 0;
+        unordered_set<char> lookup; //哈希表？
+        for(int i = 0; i < s.size(); i++){
+            while(lookup.find(s[i]) != lookup.end()){
+                lookup.erase(s[left]); //这里注意移除最左的元素，我写成了移除s[i]
+                left++;
+            }
+            lookup.insert(s[i]);
+            maxNumber = max(maxNumber, i-left+1);
+        }
+        return maxNumber;
+    }
+};
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        //s[start,end) 前面包含 后面不包含
+        int start(0), end(0), length(0), result(0);
+        int sSize = int(s.size());
+        vector<int> vec(128, -1);
+        while (end < sSize)
+        {
+            char tmpChar = s[end];
+            //仅当s[start,end) 中存在s[end]时更新start
+            if (vec[int(tmpChar)] >= start)
+            {
+                start = vec[int(tmpChar)] + 1;
+                length = end - start;
+            }
+            vec[int(tmpChar)] = end;
+
+            end++;
+            length++;
+            result = max(result, length);
+        }
+        return result;
+    }
+};
+
 // @lc code=end
 
