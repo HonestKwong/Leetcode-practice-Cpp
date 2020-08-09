@@ -47,18 +47,19 @@ public:
 
 class Solution {
 public:
+//这中方法与前面一种不一样，我愿称之为绝妙
     int lengthOfLongestSubstring(string s) {
         //s[start,end) 前面包含 后面不包含
         int start(0), end(0), length(0), result(0);
         int sSize = int(s.size());
-        vector<int> vec(128, -1);
+        vector<int> vec(128, -1);  //初始化一个长度为128的数组，每一位代表一个字符，用以记录出现的位置
         while (end < sSize)
         {
             char tmpChar = s[end];
             //仅当s[start,end) 中存在s[end]时更新start
-            if (vec[int(tmpChar)] >= start)
+            if (vec[int(tmpChar)] >= start) //这个字符再次出现
             {
-                start = vec[int(tmpChar)] + 1;
+                start = vec[int(tmpChar)] + 1;  //记录到某字符的下一个位置
                 length = end - start;
             }
             vec[int(tmpChar)] = end;
