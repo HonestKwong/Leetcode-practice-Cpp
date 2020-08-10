@@ -45,7 +45,7 @@ public:
     }
 };
 
-class Solution {
+class Solution3 {
 public:
 //这中方法与前面一种不一样，我愿称之为绝妙
     int lengthOfLongestSubstring(string s) {
@@ -72,5 +72,46 @@ public:
     }
 };
 
+
+// 错误的解法
+class Solution4 {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int left = 0;
+        int maxNum = 0;
+        vector<int> container(128,-1);
+        for(int right=0; right<s.size(); right++){
+            if (container[s[right]]==-1){
+                container[s[right]] = right;
+            }
+            else if((right > container[s[right]] )&& (container[s[right]]!=-1))
+            {   
+                left = container[s[right]]+1;
+                container[s[right]] = right;
+            }
+            maxNum = max(right-left+1,maxNum);
+        }
+    return maxNum;
+    }
+};
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int left = 0;
+        int maxNum = 0;
+        vector<int> container(128,-1);
+        for(int right=0; right<s.size(); right++){
+            if(container[s[right]]>=left)
+            {   
+                left = container[s[right]]+1;
+                container[s[right]] = right;
+            }
+            container[s[right]]=right;
+            maxNum = max(right-left+1,maxNum);
+        }
+    return maxNum;
+    }
+};
 // @lc code=end
 
