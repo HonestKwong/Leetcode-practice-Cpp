@@ -84,7 +84,7 @@ public:         //自己写的暴力解，不可取
     }
 };
 
-class Solution {
+class Solution2 {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         ListNode* head=new ListNode(-1);//存放结果的链表
@@ -117,6 +117,39 @@ public:
         return head->next;
     }
 };
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* l3 = new ListNode(0);
+        ListNode* p = l1;
+        ListNode* q = l2;
+        if(l1 == NULL && l2 ==NULL) return NULL;
+        else if(l1 == NULL && l2 != NULL) return l2;
+        else if(l1 != NULL && l2 == NULL) return l1;   //虽然题目已经给出了非空，还是得初步判断
+        else{
+            ListNode* temp = l3;
+            int flag = 0, sum =0, x=0, y=0;
+            while(p!=NULL || q!=NULL){
+                x = (p!=NULL)? (p->val): 0;
+                y = (q!=NULL)? (q->val): 0;
+                sum = x + y + flag;
+                flag = sum/10;
+                temp->next = new ListNode(sum % 10);
+                temp = temp->next;
+                if(p!=NULL) p=p->next;
+                if(q!=NULL) q=q->next;
+
+            }
+            if (flag>0) temp->next = new ListNode(flag);
+        }
+        return l3->next;
+        
+
+    }
+};
+
+
 
 // @lc code=end
 
