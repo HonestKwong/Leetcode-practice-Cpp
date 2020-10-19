@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        if((nums.size()==1)&&(nums[0]!=0)) return 0;
+        if(nums[0]!=0) return 0;
+        int i;
+        for(i=0; i<nums.size()-1; i++){
+            if(nums[i+1]-nums[i]>1){
+                return i+1;
+            }
+        }
+        return i+1;
+    }
+};
