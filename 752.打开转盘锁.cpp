@@ -76,8 +76,49 @@
 // @lc code=start
 class Solution {
 public:
-    int openLock(vector<string>& deadends, string target) {
+    string plusOne(string s, int j){
+        if(s[j] == '9') s[j] = '0';
+        else s[j] += 1;
+        return s;
+    }
 
+    string minusOne(string s, int j){
+        if(s[j] == '0') s[j] = '9';
+        else s[j] -= 1;
+        return s;
+    }
+    int openLock(vector<string>& deadends, string target) {
+        queue<string> que;
+        que.push("0000");
+        int step = 0;
+        //增加一个visited和一个 死区
+        unordered_set<string> deads;
+        for(auto &x:deadends) deads.insert(x);
+        unordered_set<string> visited;
+        visited.insert("0000");
+        while(!que.empty()){
+            int sz = que.size();
+            for(int i=0; i<sz; i++){  //一种层序遍历。四种情况实际上是迈出同一步
+                string cur = que.front();
+                que.pop();
+                if(cur == target) return step;
+                if(deads.find(cur)!=deads.end()) continue;
+                for(int j=0; j<4; j++){
+                    string up = plusOne(cur, j);
+                    if(visited.find(up)==deads.end()){
+                        que.push(up);
+                        visited.insert(up);
+                    }
+                    string down = minusOne(cur, j);
+                    if(visited.find(down)==deads.end()){
+                        que.push(down);
+                        visited.insert(down);
+                    }
+                }
+            }
+        step++; //在这里增加步数
+        }
+        return -1;
     }
 };
 // @lc code=end
