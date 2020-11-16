@@ -77,10 +77,13 @@ public:
         if(root->val == key){
             //这里要进行删改;
             if(root->left==NULL && root->right ==NULL) {
-                root=NULL;
+                return NULL;
             }
-            else if(root->right == NULL && root->left!=NULL) root = root->left;
-            else if(root->right != NULL && root->left==NULL) root = root->right;
+            else if(root->right == NULL && root->left!=NULL) return root->left;
+            else if(root->right != NULL && root->left==NULL) return root = root->right;
+
+            // else if(root->right == NULL && root->left!=NULL) root = root->left;
+            // else if(root->right != NULL && root->left==NULL) root = root = root->right;
             else{
                 auto tmp = root;
                 auto pre = tmp;
@@ -92,8 +95,9 @@ public:
                     tmp = tmp->left;
                     }
                 root->val = tmp->val;
-                if(count) pre->left = NULL;
-                else pre->right =NULL;
+                root->right = deleteNode(root->right, tmp->val);
+                // if(count) pre->left = NULL;
+                // else pre->right =NULL;
                 // auto tmp = findMin(root);
                 // root->val = tmp->val;
                 // tmp = NULL;
@@ -102,10 +106,12 @@ public:
                 // //     tmp = tmp->right;
             }
         
-            return root;
+            // return root;
         }
-        else if(root->val > key) deleteNode(root->left, key);
-        else if(root->val < key) deleteNode(root->right, key);
+        else if(root->val > key) root->left = deleteNode(root->left, key);
+        else if(root->val < key) root->right = deleteNode(root->right, key);
+        // else if(root->val > key) deleteNode(root->left, key);
+        // else if(root->val < key) deleteNode(root->right, key);
         return root;
     }
     // TreeNode* findMin(TreeNode* root){
