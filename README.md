@@ -8,3 +8,5 @@
 
 #### [剑指 Offer 50. 第一个只出现一次的字符 ](https://leetcode-cn.com/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/)  旨在熟悉unordered_map 的简单用法
 
+#### [887. 鸡蛋掉落](https://leetcode-cn.com/problems/super-egg-drop/) 题目都没看懂的一道题···
+
